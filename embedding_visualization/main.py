@@ -62,7 +62,7 @@ def generate_tooltip_html():
         image_code = """
         <div>
             <img
-                src="@imgs" height="100" alt="embedding_visualization/static/@image_path" width="100"
+                src="/embedding_visualization/static/@image_path" height="100" alt="@image_path" width="100"
                 style="margin: 0px 0px 15px 0px;"
                 border="2"
             ></img>
@@ -93,7 +93,7 @@ def load_data(file_name):
     except Exception as e:
         print(e)
     data_df = read_data_df
-    features_list = [i for i in list(data_df.columns) if i not in ['tsne_x', 'tsne_y']]
+    features_list = [i for i in list(data_df.columns) if i not in ['tsne_x', 'tsne_y', 'image_path']]
     # source = ColumnDataSource(data_df)
     cr.data_source.data = data_df
     toggle_class_select.options = features_list
