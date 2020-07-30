@@ -119,7 +119,7 @@ color_bar = ColorBar(color_mapper=LinearColorMapper(palette="Viridis256", low=1,
 p.add_layout(color_bar, 'right')
 color_bar.visible = False
 if type(cls_color_mapper['transform']) is LinearColorMapper:
-    color_bar.color_mapper = cls_color_mapper
+    color_bar.color_mapper = cls_color_mapper['transform']
     # p.add_layout(color_bar, 'right')
     color_bar.visible = True
 # Define widgets
@@ -129,7 +129,7 @@ file_select_dropdown = Dropdown(label="Data file", button_type="warning", height
 update_file_list()
 color_class_select = Select(title="Colored by:", value=features_list[0], options=features_list[:], sizing_mode="stretch_width")
 toggle_class_select = Select(title="Selected by:", value=features_list[0], options=features_list[:], sizing_mode="stretch_width")
-class_toggle_multi_select = MultiSelect(title='toggle classes:', options=list(data_df[features_list[0]].unique()))
+class_toggle_multi_select = MultiSelect(title='toggle classes:') # , options=list(data_df[features_list[0]].unique()))
 # Define widgets callbacks
 def update_color_class(attr, old, new):
     print(f"{attr} changed from {old} to {new}")
@@ -189,6 +189,8 @@ toggle_class_select.on_change('value', update_toggle_class)
 class_toggle_multi_select.on_change('value', update_class_selection)
 file_select_dropdown.on_click(file_select_handler)
 hover_tip_tool.callback = tooltip_fix_callback
+
+update_toggle_class('value', '', features_list[0])
 
 control_panel = column([file_select_dropdown, color_class_select, toggle_class_select, class_toggle_multi_select], sizing_mode="stretch_height", width=200)
 p.add_tools(wheel_zoom_tool)
